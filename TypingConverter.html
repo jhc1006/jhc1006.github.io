@@ -1,0 +1,48 @@
+﻿<div style="padding: 15px; border: 1px solid #ddd; border-radius: 10px;">
+    <h3 data-ke-size="size23">한영 타자 변환기</h3>
+    <textarea id="inputText" style="width: 100%; padding: 10px;" rows="5" placeholder="변환할 텍스트를 붙여넣으세요" oninput="resizeTextarea('inputText')"></textarea>
+    <div style="margin-top: 10px;">
+        <button style="padding: 10px 15px; cursor: pointer; background-color: #4caf50; color: white; border: none; border-radius: 5px; margin-right: 5px;" onclick="convertText('engToKor')">영어 → 한글</button>
+        <button style="padding: 10px 15px; cursor: pointer; background-color: #2196f3; color: white;" onclick="convertText('korToEng')">한글 → 영어</button>
+    </div>
+    <h4 data-ke-size="size20">변환된 결과</h4>
+    <textarea id="outputText" style="width: 100%; padding: 10px;" readonly="readonly" rows="5" oninput="resizeTextarea('outputText')"></textarea>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/hangul-js@0.2.6"></script>
+<script>
+    const engToKorMap = {
+        'q': 'ㅂ', 'w': 'ㅈ', 'e': 'ㄷ', 'r': 'ㄱ', 't': 'ㅅ', 'y': 'ㅛ', 'u': 'ㅕ', 'i': 'ㅑ', 'o': 'ㅐ', 'p': 'ㅔ',
+        'a': 'ㅁ', 's': 'ㄴ', 'd': 'ㅇ', 'f': 'ㄹ', 'g': 'ㅎ', 'h': 'ㅗ', 'j': 'ㅓ', 'k': 'ㅏ', 'l': 'ㅣ',
+        'z': 'ㅋ', 'x': 'ㅌ', 'c': 'ㅊ', 'v': 'ㅍ', 'b': 'ㅠ', 'n': 'ㅜ', 'm': 'ㅡ',
+        'Q': 'ㅃ', 'W': 'ㅉ', 'E': 'ㄸ', 'R': 'ㄲ', 'T': 'ㅆ', 'O': 'ㅒ', 'P': 'ㅖ'
+    };
+
+    const korToEngMap = Object.entries(engToKorMap).reduce((obj, [key, value]) => {
+        obj[value] = key;
+        return obj;
+    }, {});
+
+    function convertText(direction) {
+        const input = document.getElementById('inputText').value;
+        let converted = '';
+
+        if (direction === 'engToKor') {
+            let temp = '';
+            for (let char of input) {
+                temp += engToKorMap[char] || char;
+            }
+            converted = Hangul.assemble(temp);
+        } else if (direction === 'korToEng') {
+            const disassembled = Hangul.disassemble(input);
+            converted = disassembled.map(char => korToEngMap[char] || char).join('');
+        }
+
+        document.getElementById('outputText').value = converted;
+    }
+
+    function resizeTextarea(id) {
+        const textarea = document.getElementById(id);
+        textarea.style.height = 'auto';
+        textarea.style.height = textarea.scrollHeight + 'px';
+    }
+</script>
