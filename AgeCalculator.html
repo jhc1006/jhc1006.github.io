@@ -1,6 +1,8 @@
 ﻿<div style="padding: 15px; border: 1px solid #ddd; border-radius: 10px;">
     <h3 data-ke-size="size23">만 나이 계산기</h3>
-    <label for="birthDate">생년월일을 입력하세요 (예: 1990-05-30):</label><br /><input id="birthDate" style="padding: 10px; margin-top: 10px;" maxlength="10" type="text" placeholder="YYYY-MM-DD" /><br /><button style="margin-top: 10px; padding: 10px 15px; cursor: pointer; background-color: #4caf50; color: white; border: none; border-radius: 5px;">나이 계산하기</button>
+    <label for="birthDate">생년월일을 입력하세요 (예: 1990-05-30):</label><br />
+    <input id="birthDate" style="padding: 10px; margin-top: 10px;" maxlength="10" type="text" placeholder="YYYY-MM-DD" oninput="autoHyphen(this)" /><br />
+    <button style="margin-top: 10px; padding: 10px 15px; cursor: pointer; background-color: #4caf50; color: white; border: none; border-radius: 5px;" onclick="calculateAge()">나이 계산하기</button>
     <h4 data-ke-size="size20">계산된 만 나이:</h4>
     <input id="ageResult" style="width: 100%; padding: 10px;" readonly="readonly" type="text" />
     <p id="errorMessage" style="color: red;" data-ke-size="size16">&nbsp;</p>
